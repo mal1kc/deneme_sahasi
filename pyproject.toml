@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "deneme-sahasi"
+version = "0.1.0"
+description = "testing area"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^1.22.3"
+psutil = "^5.9.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
