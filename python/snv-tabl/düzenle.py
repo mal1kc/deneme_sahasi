@@ -1,5 +1,4 @@
 import json
-from pickle import FALSE
 from pprint import pprint
 
 def main():
@@ -31,13 +30,13 @@ def get_json_data():
 def update_dict_data(d:dict):
     try:
         try:
-            if (d['bilgisayar programcılığı-ii'] == " " )or (len(str(d['bilgisayar programcılığı-ii']))==0):
-                d['bilgisayar programcılığı-ii'] = None
+            if (d['Bilgisayar Programcılığı-II'] == " " )or (len(str(d['Bilgisayar Programcılığı-II']))==0):
+                d['Bilgisayar Programcılığı-II'] = None
         except KeyError:
             # print(d)
             return None
-        print({False:f'\nremoved {d["bilgisayar programcılığı-i"]}\n\n',True:""}[(d['bilgisayar programcılığı-i'] == " ")or (len(str(d['bilgisayar programcılığı-i']))==0)],end="")
-        d.pop("bilgisayar programcılığı-i",None)
+        print({False:f'\nremoved {d["Bilgisayar Programcılığı-I"]}\n\n',True:""}[(d['Bilgisayar Programcılığı-I'] == " ")or (len(str(d['Bilgisayar Programcılığı-I']))==0)],end="")
+        d.pop("Bilgisayar Programcılığı-I",None)
         return d
     except KeyError:
         return d
@@ -45,7 +44,7 @@ def update_dict_data(d:dict):
 def check_dict_data(d:dict):
     if d is not None:
         try:
-            if d['bilgisayar programcılığı-ii'] == None:
+            if d['Bilgisayar Programcılığı-II'] == None:
                 # print("bos")
                 return False
             else:
