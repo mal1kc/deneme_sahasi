@@ -102,10 +102,18 @@ category = "dev"
 optional = false
 python-versions = ">=3.7"
 
+[[package]]
+name = "whitespace"
+version = "1.0.0b8"
+description = "A Whitespace interpreter."
+category = "main"
+optional = false
+python-versions = "*"
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "7bf18fdbf0112652f1136012db74b2fba2e915cfa698120efe2f6bc108d8e677"
+content-hash = "c437fe63224ef61f30e9b8df0005d4bab171cc3099424314be0696ef0789b1c5"
 
 [metadata.files]
 black = [
@@ -216,4 +224,8 @@ tomli = [
 typing-extensions = [
     {file = "typing_extensions-4.2.0-py3-none-any.whl", hash = "sha256:6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708"},
     {file = "typing_extensions-4.2.0.tar.gz", hash = "sha256:f1c24655a0da0d1b67f07e17a5e6b2a105894e6824b92096378bb3668ef02376"},
+]
+whitespace = [
+    {file = "whitespace-1.0.0b8-py3-none-any.whl", hash = "sha256:28120de2acef077afd855e5b8d36b022ebbf5755247454a3f8fc48901631e767"},
+    {file = "whitespace-1.0.0b8.tar.gz", hash = "sha256:747026deeb65ae3badd2d63460a0e959f811dda9588a5863f7db44a0e6e23df0"},
 ]

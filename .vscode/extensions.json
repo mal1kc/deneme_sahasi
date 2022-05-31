@@ -3,10 +3,8 @@
         "ms-vscode.cpptools",
         "magicstack.magicpython",
         "ms-python.vscode-pylance",
-        "ms-python.python",
         "donjayamanne.python-environment-manager",
         "njpwerner.autodocstring",
-        "kevinrose.vsc-python-indent",
-        "magicstack.MagicPython"
+        "kevinrose.vsc-python-indent"
     ]
 }
