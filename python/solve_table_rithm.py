@@ -27,7 +27,8 @@ class Table:
                 for j in range(len(self.rows[0])):
                     table += self.rows[i][j] + " "
                 table += "\n"
-            table += "  " + " ".join(map(chr, self.bottom_guide[: len(self.columns)]))
+            table += "  " + \
+                " ".join(map(chr, self.bottom_guide[: len(self.columns)]))
         else:
             for i in self.rows:
                 for j in i:
@@ -49,6 +50,7 @@ class Table:
 
     def get_column(self, col: str):
         return [self.get_tile(row, col) for row in range(len(self.rows))]
+
     def change_tile(self, row, col, new_tile, with_guides=False):
         if with_guides:
             self.rows[-row][ord(col) - ord("a")] = new_tile
@@ -88,53 +90,54 @@ class Table:
         return (-row, chr(col + ord("a")))
 
 
-
 def main():
     table_0 = get_filled_table_w_rule(Table("table_0", 4, 180))
     # print(table_0)
     # print(table_0)
     # table_0.print_table()
-    result = get_columns_with_multiple_filled_tiles(get_filled_tiles(table_0),3)
+    result = get_columns_with_multiple_filled_tiles(
+        get_filled_tiles(table_0), 3)
     print(len(result))
     file_ = open("table_0.txt", "w")
     file_.write(str(table_0))
     file_.write(f"\n{result}")
     file_.close()
-    print(f"\n{result}" )
+    print(f"\n{result}")
     # print(table_0.get_column(59))
     for i in result:
         print(table_0.get_column(i))
-    
+
     result = [x+1 for x in result]
 
-    
     # floors = [x-1 for x in floors]
     # print(floors)
     # difference = [x for x in floors if x not in result]
     # print(difference)
 
+
 def solution():
     print("solution")
     floors = []
-    floors.append(get_all_floors_with_range(5,180))
-    floors.append(get_all_floors_with_range(4,180))
-    floors.append(get_all_floors_with_range(3,180))
-    floors.append(get_all_floors_with_range(2,180))
+    floors.append(get_all_floors_with_range(5, 180))
+    floors.append(get_all_floors_with_range(4, 180))
+    floors.append(get_all_floors_with_range(3, 180))
+    floors.append(get_all_floors_with_range(2, 180))
     results = []
-    checker = [0,0,0,0]
+    checker = [0, 0, 0, 0]
     for i in range(180):
         if i in floors[0]:
-            checker[0]+=1
+            checker[0] += 1
         if i in floors[1]:
-            checker[1]+=1
+            checker[1] += 1
         if i in floors[2]:
-            checker[2]+=1
+            checker[2] += 1
         if i in floors[3]:
-            checker[3]+=1
+            checker[3] += 1
         if checker.count(1) == 3:
             results.append(i)
-        checker = [0,0,0,0]
+        checker = [0, 0, 0, 0]
     print(f'{results}-{len(results)}')
+
 
 def get_filled_table_w_rule(table: Table):
     for i in range(1, table.__len__()[1][1]):
@@ -149,47 +152,51 @@ def get_filled_table_w_rule(table: Table):
                 table.change_tile(j, i - 1, "A")
     return table
 
-def get_filled_tiles(table: Table)->set:
+
+def get_filled_tiles(table: Table) -> set:
     # filled_tile_cors = [[x,y]]
     filled_tile_cors = []
     for i in range(1, table.__len__()[1][1]):
         for j in range(0, table.__len__()[1][0]):
-            if table.get_tile(j,i)=="A":
-                if [j,i] not in filled_tile_cors:
-                    filled_tile_cors.append([j,i])
+            if table.get_tile(j, i) == "A":
+                if [j, i] not in filled_tile_cors:
+                    filled_tile_cors.append([j, i])
     return filled_tile_cors
 
+
 def remove_items(list_, item_):
-     
+
     # using list comprehension to perform the task
     res = [i for i in list_ if i != item_]
- 
+
     return res
 
-def get_columns_with_multiple_filled_tiles(filled_tiles:list[list],row_count:int)->set:
+
+def get_columns_with_multiple_filled_tiles(filled_tiles: list[list], row_count: int) -> set:
     columns = []
     checked_columns = []
-    if len(filled_tiles)>0:
+    if len(filled_tiles) > 0:
         for t in filled_tiles:
             checked_columns.append(t[1])
 
     length_checked_columns = len(checked_columns)
     for i in range(length_checked_columns):
         for t in filled_tiles:
-            if checked_columns.count(t[1])==row_count:
+            if checked_columns.count(t[1]) == row_count:
                 columns.append(t[1])
-                checked_columns = remove_items(checked_columns,t[1])
-                
+                checked_columns = remove_items(checked_columns, t[1])
+
     return columns
 
-def get_all_floors_with_range(number:int , range_:int)->list:
+
+def get_all_floors_with_range(number: int, range_: int) -> list:
     floors = []
-    for j in range(1,range_+1):
+    for j in range(1, range_+1):
         if j % number == 0:
             floors.append(j)
     return floors
 
+
 if __name__ == "__main__":
     main()
     # solution()
-    

@@ -1,2 +1,2 @@
-print( open(__file__).read())
+print(open(__file__).read())
 2+2
