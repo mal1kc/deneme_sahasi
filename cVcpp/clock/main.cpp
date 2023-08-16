@@ -1,6 +1,8 @@
+#include <cstddef>
 #include <ctime>
 #include <iomanip>
 #include <iostream>
+#include <ostream>
 #include <string>
 #include <unistd.h>
 int main() {
@@ -31,17 +33,17 @@ int main() {
       {"┗━┛ ", "┗━┛ ", "┗━┛ ", "┗━┛ ", "┗━┛ ", "┗━┛ ", "┗━┛ ", "┗━┛ "},
   };
 
-  for (int i = 0; i < 11; i++) {
-    for (int j = 0; j < 7; j++) {
-      cout << digits[j][i] << "\n";
-    }
-  }
+  // for (int i = 0; i < 11; i++) {
+  //   for (int j = 0; j < 7; j++) {
+  //     cout << digits[j][i] << "\n";
+  //   }
+  // }
 
   time_t now = time(0);
   tm *ltm = localtime(&now);
 
-  cout << put_time(ltm, "%a %b %d %H:%M:%S %Y") << "\n";
-  cout << ltm->tm_hour << "\n";
+  // cout << put_time(ltm, "%a %b %d %H:%M:%S %Y") << "\n";
+  // cout << ltm->tm_hour << "\n";
 
   tm *zaman = ltm;
   while (true) {
@@ -77,6 +79,12 @@ int main() {
       cout << "\n";
     }
     sleep(1);
+    for (size_t i = 0; i < 7; i++) {
+      for (size_t j = 0; j < 8; j++) {
+        cout << "\r";
+      }
+      cout << "\033[A";
+    }
   }
   // cout << digits[0][0] << "\n";
   // cout << digits[1][0] << "\n";
