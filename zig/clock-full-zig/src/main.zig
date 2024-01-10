@@ -163,14 +163,15 @@ pub fn main() !void {
 
         // counter += 1;
 
-        // sleep 1/5 second
-        std.time.sleep(sleep_time);
-
         // clear the terminal
         for (0..output_buffer.len) |row_i| {
             _ = row_i;
-           try stdout.print("\x1B[A", .{});
+            // top of the terminal
+            // try stdout.print("\x1B[{d}A", .{output_buffer.len});
+            try stdout.print("\x1B[{d}A", .{1}); // current line
         }
+        // sleep 1/5 second
+        std.time.sleep(sleep_time);
     }
 
     try bw.flush(); // don't forget to flush!
