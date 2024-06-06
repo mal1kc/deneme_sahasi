@@ -6,7 +6,7 @@ fn main() {
     // let mut counter = 0;
 
     const SLEEP_DURATION: u8 = 1;
-    let mut now = SystemTime::now();
+    let mut now: SystemTime;
 
     const DIGITS: [[&str; 10]; 7] = [
         [
