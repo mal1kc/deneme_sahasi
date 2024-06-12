@@ -3,6 +3,20 @@ const expect = @import("std").testing.expect;
 
 pub const sTime = struct {
     timestamp: i64,
+    tzdiff: ?i8,
+
+    pub fn update(self: *sTime, tzdiff: ?i8) void {
+        if (self.tzdiff == null and tzdiff != null) {
+            self.tzdiff = tzdiff;
+            return update(sTime);
+        } else if (self.tzdiff != null) {
+            self.timestamp = std.time.timestamp() + @as(i16, self.tzdiff) * std.time.s_per_hour;
+            return;
+        }
+        self.timestamp = std.time.timestamp();
+        return;
+    }
+
     pub fn utcnow() sTime {
         return sTime{ .timestamp = std.time.timestamp() };
     }
