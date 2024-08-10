@@ -3,14 +3,14 @@ const expect = @import("std").testing.expect;
 
 pub const sTime = struct {
     timestamp: i64,
-    tzdiff: ?i8,
+    tzdiff: ?i16,
 
     pub fn update(self: *sTime, tzdiff: ?i8) void {
         if (self.tzdiff == null and tzdiff != null) {
-            self.tzdiff = tzdiff;
-            return update(sTime);
+            self.tzdiff = @as(i16, tzdiff.?);
+            return self.update(null);
         } else if (self.tzdiff != null) {
-            self.timestamp = std.time.timestamp() + @as(i16, self.tzdiff) * std.time.s_per_hour;
+            self.timestamp = std.time.timestamp() + self.tzdiff.? * std.time.s_per_hour;
             return;
         }
         self.timestamp = std.time.timestamp();
@@ -21,7 +21,7 @@ pub const sTime = struct {
         return sTime{ .timestamp = std.time.timestamp() };
     }
     pub fn now(tzdiff: i8) sTime {
-        return sTime{ .timestamp = std.time.timestamp() + @as(i16, tzdiff) * std.time.s_per_hour };
+        return sTime{ .timestamp = std.time.timestamp() + @as(i16, tzdiff) * std.time.s_per_hour, .tzdiff = tzdiff };
     }
 
     pub fn hours(self: *sTime) i64 {
