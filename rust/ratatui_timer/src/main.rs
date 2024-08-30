@@ -38,11 +38,12 @@ fn main() -> Result<(), std::io::Error> {
         }
 
         let seconds = remaining_time.as_secs();
-        let mins = seconds / 60;
-        let hours = mins / 60;
+        let seconds_to_show = seconds % 60;
+        let mins = seconds / 60 % 60;
+        let hours = seconds / 3600 % 24;
 
         time_str.clear();
-        let time_str = format!("{:02}h {:02}m {:02}s", hours, mins, seconds);
+        let time_str = format!("{:02}h {:02}m {:02}s", hours, mins, seconds_to_show);
 
         terminal.draw(|f| {
             let areas: [Rect; 2] =
@@ -73,7 +74,6 @@ fn main() -> Result<(), std::io::Error> {
 
         let _ = terminal.clear();
     }
-    disable_raw_mode()?;
     let _ = terminal.clear();
     let _ = terminal.set_cursor_position((0, 0));
     Ok(())
