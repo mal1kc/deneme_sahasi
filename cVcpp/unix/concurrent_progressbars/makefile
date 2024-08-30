@@ -11,16 +11,20 @@ OBJS=$(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 
 BIN=$(BINDIR)/main
 
+mkdirs:
+	mkdir -p $(BINDIR)
+	mkdir -p $(OBJ)
+
 all:$(BIN)
 
 relase: CFLAGS=-Wall -O2 -DNDEBUG
 relase: clean
 relase: $(BIN)
 
-$(BIN): $(OBJS)
+$(BIN): $(OBJS) mkdirs
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 
-$(OBJ)/%.o: $(SRC)/%.c
+$(OBJ)/%.o: $(SRC)/%.c mkdirs
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
