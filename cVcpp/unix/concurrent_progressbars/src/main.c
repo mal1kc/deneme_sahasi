@@ -63,6 +63,6 @@ int main(int argc, char *argv[]) {
     usleep(1000);
   }
 
-  printf("\nDONE!\n");
+  printf("\n DONE!!\n");
   return EXIT_SUCCESS;
 }

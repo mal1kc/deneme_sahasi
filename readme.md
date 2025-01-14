@@ -21,7 +21,7 @@ Repo that contains some little practice/experiment scripts and simple apps
   * [file name collector (a simple ls to file example)](./python/filename_collect.py)
   * [example of python dataclass decorator and property method](./python/lib_dataclass.py)
   * [some self notes about usages of multiple logical operator usage in python](./python/multiple_logical_operators.py)
-  * [convert size to human readble](./python/file_size_to_human_readable.py)
+  * [convert size to human readable](./python/file_size_to_human_readable.py)
   * [add spaces to between char of given string](./python/split_to_chars.py)
   * [strategy and observer pattern example implementation](./python/strategy_and_observer_pattern.py)
   * [basic suffix filler example](./python/strategy_and_observer_pattern.py)
@@ -34,13 +34,13 @@ Repo that contains some little practice/experiment scripts and simple apps
   * [a terminal timer application created to only write some more rust](./rust/crossterm_timer/src/main.rs)
   * [also another terminal clock application created to only write some more rust but this one uses more high level tui lib (🐀) ratatui ](./rust/ratatui_clock/src/main.rs)
   * [timer version of ratatui clock created to use more rust](./rust/ratatui_timer/src/main.rs)
-  * [simple file hosting server appliction (uses creates for http things) ](./rust/web_filehoster/src/main.rs)
+  * [simple file hosting server application (uses creates for http things) ](./rust/web_filehoster/src/main.rs)
 
 ## zig (Z / ⚙️  )
 
   * [a simple zig clock terminal application written in fully in zig and zig stdlib](./zig/clock-full-zig/src/main.zig)
   * [a simple zig clock terminal application but created with ncurses clib](./zig/clock-ncurses/src/main.zig)
-  * [a simple zig timer terminal appliction created with ncurses clib](./zig/timer-ncurses/src/main.zig)
+  * [a simple zig timer terminal application created with ncurses clib](./zig/timer-ncurses/src/main.zig)
 
 ## weird programming langs things
   

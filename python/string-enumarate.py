@@ -1,5 +1,5 @@
-gird1 = input("giriniz :")
-gird12 = int(input("gir 2 : "))
+gird1 = input("input prefix :")
+gird12 = int(input("suffix_num_count 2 : "))
 liste = list()
 print(gird12)
 for i in range(0, gird12):

@@ -38,7 +38,7 @@ print(
 print('='*22, 'cpu information', '='*22)
 
 print('', '-', 'number of cores', '-')
-print(f' pyhsical cores: {psutil.cpu_count(logical=False)}')
+print(f' physical cores: {psutil.cpu_count(logical=False)}')
 print(f' total cores: {psutil.cpu_count(logical=True)}')
 
 print('', '-', 'cpu frequencies', '-')
@@ -95,7 +95,7 @@ print(f'  -> total write: {get_size(disk_io.write_bytes)}')
 
 # network info
 print('='*19, 'network information', '='*19)
-# get all network interfaces (virtual & pyhsical)
+# get all network interfaces (virtual & physical)
 for interface_name, interface_adresses in psutil.net_if_addrs().items():
     for address in interface_adresses:
         if str(address.family) == 'AddressFamily.AF_INET':

@@ -1,12 +1,12 @@
 import os
 # import numpy as np
 # import pandas as pd
-aranicak = os.walk("G:\\")
-# bozuklar = pd.DataFrame(columns=["filename","file_size","full_path"])
+search_dir = os.walk("G:\\")
+# corrupt = pd.DataFrame(columns=["filename","file_size","full_path"])
 i = 0
 fileList = list()
 print("hi")
-for root, dirc, files in aranicak:
+for root, dirc, files in search_dir:
     try:
         # print(files)
         for file in files:
