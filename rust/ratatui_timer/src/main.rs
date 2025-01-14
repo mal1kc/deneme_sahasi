@@ -72,7 +72,7 @@ fn main() -> Result<(), std::io::Error> {
 
         thread::sleep(sleep_time);
 
-        let _ = terminal.clear();
+        //let _ = terminal.clear();
     }
     let _ = terminal.clear();
     let _ = terminal.set_cursor_position((0, 0));

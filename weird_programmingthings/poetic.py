@@ -1,3 +1,4 @@
+# poetic interpriter
 import argparse
 import random
 import re
@@ -7,27 +8,26 @@ import sys
 
 
 def error(errorMsg):
-    sys.stderr.write("\nERROR: "+errorMsg)
+    sys.stderr.write("\nERROR: " + errorMsg)
     sys.exit()
 
 
 # Parse command-line options.
 parser = argparse.ArgumentParser()
+parser.add_argument("program", help="file to run as Poetic code")
 parser.add_argument(
-    "program",
-    help="file to run as Poetic code"
-)
-parser.add_argument(
-    "-i", "--input",
+    "-i",
+    "--input",
     metavar="inputFile",
     help="take input from the specified file",
-    required=False
+    required=False,
 )
 parser.add_argument(
-    "-w", "--wimpmode",
+    "-w",
+    "--wimpmode",
     help="interpret program in wimpmode",
     action="store_true",
-    required=False
+    required=False,
 )
 args = parser.parse_args()
 
@@ -44,10 +44,12 @@ with open(args.program, encoding="utf8") as f:
     if args.wimpmode:
         program = "".join([c for c in f.read() if c in "0123456789"])
     else:
-        program = "".join([c if c.isalpha() else (
-            "" if c == "'" else " ") for c in f.read()])
         program = "".join(
-            [str(len(w)) if len(w) != 10 else "0" for w in program.split()])
+            [c if c.isalpha() else ("" if c == "'" else " ") for c in f.read()]
+        )
+        program = "".join(
+            [str(len(w)) if len(w) != 10 else "0" for w in program.split()]
+        )
     program = re.findall(r"((?:[3456]\d)|\d)", program)
 
 # Initializations

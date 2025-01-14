@@ -4,21 +4,23 @@ int main() {
   int i = 0;
   unsigned short int j = 3;
 
+  // a basic for loop
   for (unsigned short int i = 0; i < j; i++) {
-    printf("led yaniyor\n");
-    printf("bekle\n");
-    printf("led sonuyor\n");
-    printf("bekle\n");
+    printf("working %d \n",j-i);
+    printf("wait\n");
   }
 
-baslangic:
+  // reset vars
+  i = 0;
+  j = 3;
+
+  // same shit with goto
+loop_start:
   if (i < j) {
-    printf("led yaniyor\n");
-    printf("bekle 5 sn\n");
-    printf("led sonuyor\n");
-    printf("bekle 5 sn\n");
+    printf("working %d \n",j-i);
+    printf("wait \n");
     i = i + 1;
-    goto baslangic;
+    goto loop_start;
   }
   return 0;
 }

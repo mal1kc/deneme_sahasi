@@ -60,3 +60,4 @@ dkms.conf
 *project_*tar.gz
 bin/*
 obj
+kb_input
