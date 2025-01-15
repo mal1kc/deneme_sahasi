@@ -41,6 +41,7 @@ Repo that contains some little practice/experiment scripts and simple apps
   * [a simple zig clock terminal application written in fully in zig and zig stdlib](./zig/clock-full-zig/src/main.zig)
   * [a simple zig clock terminal application but created with ncurses clib](./zig/clock-ncurses/src/main.zig)
   * [a simple zig timer terminal application created with ncurses clib](./zig/timer-ncurses/src/main.zig)
+  * [a simple random number guessing game](./zig/guessing_game/src/main.zig)
 
 ## weird programming langs things
   
