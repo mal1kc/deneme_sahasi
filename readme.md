@@ -9,6 +9,7 @@ Repo that contains some little practice/experiment scripts and simple apps
 ## go (🦙)
 
   * [a terminal clock example to learn very basic loop,array syntax of language](./go/clock/main.go)
+  * [web fileserver example](./go/fileserver/main.go)
 
 ## powershell
 
