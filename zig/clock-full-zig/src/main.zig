@@ -105,9 +105,9 @@ fn abs(num: isize) usize {
 }
 
 pub fn main() !void {
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
+    var stdout_buffer: [1024]u8 = undefined;
+    var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+    const stdout = &stdout_writer.interface;
 
     // const runtime_sec = 300; // limit the runtime to 30 seconds
     // var counter: i32 = 0;
@@ -184,11 +184,10 @@ pub fn main() !void {
             // try stdout.print("\x1B[{d}A", .{output_buffer.len});
             try stdout.print("\x1B[{d}A", .{1}); // current line
         }
-        // sleep 1/5 second
-        std.time.sleep(sleep_time);
+        std.Thread.sleep(sleep_time);
     }
 
-    try bw.flush(); // don't forget to flush!
+    try stdout.flush(); // don't forget to flush!
 }
 
 fn eql(comptime T: type, a: []const T, b: []const T) bool {

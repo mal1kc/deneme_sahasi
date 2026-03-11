@@ -19,69 +19,71 @@ fn gen_random_num(seed: i64, min: comptime_float, max: comptime_float) i64 {
     return @as(i64, @intFromFloat((min + (@as(f64, @floatFromInt(rand_init)) / @as(f64, @floatFromInt(rand_const_m - 1)))) * (max - min)));
 }
 
-fn readIntUntilNewLine(reader: std.fs.File.Reader, writer: anytype) anyerror!usize {
-    var write_cnt: usize = 0;
-    while (true) {
-        const byte: u8 = try reader.readByte();
-        if (byte == '\n') return write_cnt;
+fn takeDelimHandle(reader: *std.io.Reader) ?[]u8 {
+    const bare_line = reader.takeDelimiter('\n') catch |err| {
+        std.log.err("{s}", .{@errorName(err)});
+        return null;
+    };
 
+    return bare_line;
+}
+
+fn read_number(reader: *std.io.Reader) anyerror!usize {
+    const bare_line = takeDelimHandle(reader) orelse return 0;
+    const line = std.mem.trim(u8, bare_line, "\r");
+
+    var indx: usize = 0;
+    var number: usize = 0;
+    while (indx < line.len) : (indx += 1) {
+        if (line[indx] < '0' or line[indx] > '9') return number;
         for ('0'..'9' + 1) |int_as_chr| {
-            if (int_as_chr == byte) {
-                const val = byte - '0';
-                try writer.writeByte(val);
+            if (int_as_chr == line[indx]) {
+                const val = line[indx] - '0';
+                number = val + number * 10;
             }
         }
-        write_cnt = write_cnt + 1;
     }
+    return number;
 }
 
 pub fn main() !void {
     const rand_seed = std.time.timestamp();
     const rand_num = gen_random_num(rand_seed, 0, 255);
-    var input: [10]u8 = undefined;
-    var fixed_buffer_stream = std.io.fixedBufferStream(&input);
-    const stdin = std.io.getStdIn().reader();
-    const stdout = std.io.getStdOut().writer();
 
-    var input_int: u64 = 0;
-    const user_try_limit = 5;
+    var stdout_buf: [1024]u8 = undefined;
+    var stdout_writer = std.fs.File.stdout().writer(&stdout_buf);
+    const stdout = &stdout_writer.interface;
+
+    var stdin_buf: [1024]u8 = undefined;
+    var stdin_reader = std.fs.File.stdin().reader(&stdin_buf);
+    const stdin = &stdin_reader.interface;
+
+    const user_try_limit = 10;
     var user_try_cnt: u8 = 1;
+
     while (user_try_cnt <= user_try_limit) {
-
         // reset input buffer reading at end of block
-        defer fixed_buffer_stream.reset();
-        defer input_int = 0;
-        defer input = undefined;
-
         defer user_try_cnt = user_try_cnt + 1;
 
-        try stdout.print("please enter a number for guess (0-255): ", .{});
-        const number_len = readIntUntilNewLine(stdin, fixed_buffer_stream.writer()) catch {
-            try stdout.print("\ngiven input is too big\n", .{});
-            try stdin.skipUntilDelimiterOrEof('\n');
-            break;
+        try stdout.writeAll("please enter a number for guess (0-255): \n");
+
+        try stdout.flush();
+        const guess = read_number(stdin) catch |err| {
+            std.log.err("{s}", .{@errorName(err)});
+            try stdout.writeAll("\ngiven input is too big\n");
+            try stdout.flush();
+            continue;
         };
 
-        if (number_len == 0) {
-            continue;
-        }
+        try stdout.writeAll("\n");
 
-        for (0..number_len) |value| {
-            // 123 = 1 * (10 ^ 2) + 2 * ( 10 ^ 1) + 3 * (10 ^ 0)
-            // 92 = 9 * (10 ^ 1) + 2 * ( 10 ^ 0)
-
-            input_int = input_int + input[value] * (std.math.pow(usize, 10, (number_len - value - 1)));
-        }
-
-        try stdout.print("\n", .{});
-
-        const user_vs_rand_diff = @abs(@as(i128, input_int) - @abs(rand_num));
+        const user_vs_rand_diff = @abs(@as(i128, guess) - @abs(rand_num));
 
         if (user_vs_rand_diff == 0) {
-            try stdout.print("Congratulations user, you at least try {d} times to found {d} \n", .{ user_try_cnt, input_int });
+            try stdout.print("Congratulations user, you at least try {d} times to found {d} \n", .{ user_try_cnt, guess });
             break;
         } else {
-            try stdout.print("try count {d} user entered: {d}\n", .{ user_try_cnt, input_int });
+            try stdout.print("try count {d} user entered: {d}\n", .{ user_try_cnt, guess });
 
             if (user_vs_rand_diff < 10) {
                 try stdout.print("hint : {s}\n", .{distance_hints[2]});
@@ -91,6 +93,9 @@ pub fn main() !void {
                 try stdout.print("hint : {s}\n", .{distance_hints[0]});
             }
         }
+
+        try stdout.flush();
     }
     try stdout.print("rand number: {d}\n", .{rand_num});
+    try stdout.flush();
 }

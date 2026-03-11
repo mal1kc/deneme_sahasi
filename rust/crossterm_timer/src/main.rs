@@ -1,5 +1,6 @@
 use crossterm::{
     cursor::{Hide, MoveTo, Show},
+    event::{poll, read, Event, KeyCode, KeyEvent, KeyModifiers},
     execute,
     style::{Print, ResetColor},
     terminal::{
@@ -48,6 +49,24 @@ fn main() -> Result<(), std::io::Error> {
         let remaining_secs = remaining_secs % 60;
 
         let time_str = format!("{:02}:{:02}", remaining_mins, remaining_secs);
+        if poll(Duration::from_millis(500))? {
+            // It's guaranteed that the `read()` won't block when the `poll()`
+            // function returns `true`
+            match read()? {
+                // Event::FocusGained => println!("FocusGained"),
+                // Event::FocusLost => println!("FocusLost"),
+                Event::Key(event) => {
+                    if handle_key_event(event) {
+                        break;
+                    }
+                }
+
+                _ => (),
+                // Event::Mouse(event) => println!("{:?}", event),
+                // Event::Paste(data) => println!("Pasted {:?}", data),
+                // Event::Resize(width, height) => println!("New size {}x{}", width, height),
+            }
+        }
         execute!(
             std::io::stdout(),
             Clear(ClearType::All),
@@ -64,4 +83,14 @@ fn main() -> Result<(), std::io::Error> {
     disable_raw_mode()?;
 
     Ok(())
+}
+
+fn handle_key_event(event: KeyEvent) -> bool {
+    if event.code == KeyCode::Char('q') {
+        return true;
+    }
+    if event.code == KeyCode::Char('c') && event.modifiers == KeyModifiers::CONTROL {
+        return true;
+    }
+    return false;
 }

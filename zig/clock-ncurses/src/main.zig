@@ -1,5 +1,7 @@
 const std = @import("std");
-const ncurses = @import("ncurses.zig");
+const ncurses = @cImport({
+    @cInclude("ncurses.h");
+});
 
 pub const sTime = struct {
     timestamp: i64,
@@ -59,8 +61,8 @@ pub fn main() anyerror!void {
     std.debug.print("Starting ncurses program...\n", .{});
     // initialize ncurses
     const screen = ncurses.initscr();
-    defer ncurses.endwin();
-    // _ = ncurses.noecho();
+    defer _ = ncurses.endwin();
+    _ = ncurses.noecho();
     _ = ncurses.curs_set(ncurses.FALSE);
 
     // set up color pairs
@@ -72,6 +74,7 @@ pub fn main() anyerror!void {
     _ = ncurses.cbreak();
     _ = ncurses.nodelay(screen, true);
 
+    var ch: c_int = undefined;
     var time = sTime.now(3); // utc +3
     var time_str: [8]u8 = .{ '0', '0', ':', '0', '0', ':', '0', '0' };
     const sleep_time = std.time.ns_per_s / 10;
@@ -79,6 +82,22 @@ pub fn main() anyerror!void {
     var color_pair: c_int = 1;
 
     while (true) {
+        ch = ncurses.getch();
+
+        if (ch != ncurses.ERR) {
+            switch (ch) {
+                'q' => {
+                    _ = ncurses.clear();
+                    _ = ncurses.move(@divFloor(max_windows_size.y, 2), @divFloor((max_windows_size.x - @as(c_int, time_str.len)), 2));
+                    _ = ncurses.printw("presses q exiting ....\n");
+                    _ = ncurses.refresh();
+                    std.Thread.sleep(std.time.ns_per_ms * 500);
+                    break;
+                },
+                else => continue,
+            }
+        }
+
         time.update(null);
 
         max_windows_size.x = ncurses.getmaxx(ncurses.stdscr);
@@ -102,6 +121,6 @@ pub fn main() anyerror!void {
         // _ = ncurses.mvprintw(@divFloor(max_windows_size.y, 2), @divFloor((max_windows_size.x - @as(c_int, time_str.len)), 2), "%s", &time_str);
         _ = ncurses.refresh();
 
-        std.time.sleep(sleep_time);
+        std.Thread.sleep(sleep_time);
     }
 }
